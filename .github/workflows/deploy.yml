@@ -1,6 +1,6 @@
-name: Deploy website
+name: Deploy websit
 
-on:
+on: 
   push:
     branches:
       - main
@@ -16,14 +16,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     
-    - name: Deploy to server
+    - name: Deploy to server 
       uses: easingthemes/ssh-deploy@main
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
         REMOTE_HOST: ${{ secrets.BASTION_HOST }}
         REMOTE_USER: ubuntu
         TARGET: /var/www/html
-
-    - name: SSH into WordPress server and copy files
-      run: |
-        ssh -o StrictHostKeyChecking=no -i ${{ secrets.SERVER_SSH_KEY }}  ubuntu@${{ secrets.BASTION_HOST }} 
