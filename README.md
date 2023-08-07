@@ -67,9 +67,9 @@ The goal is to install WordPress on an EC2 instance in AWS and automate deployme
  ---
  - cd /etc/nginx/sites-enabled/
  - server_name mydomain.com # under server block if we have domain we need to configure here
- ## we need to add index.php to list as server to know which file to open as wordpress written in php 
- ## In location block we need to set /index.php?$args; this is basically configuration required to run wordpress site
- ## Uncomment lines 'location' block as we installed php-fpm
+ - we need to add index.php to list as server to know which file to open as wordpress written in php 
+ - In location block we need to set /index.php?$args; this is basically configuration required to run wordpress site
+ - Uncomment lines 'location' block as we installed php-fpm
  ---
  ## NOW WE CAN ACCESS WORDPRESS SITE FROM SERVER IP
  ## Configure database name, username, password, database host, table prefix
