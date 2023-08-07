@@ -1,25 +1,30 @@
-name: Deploy websit
+name: Deploy to AWS 
 
-on: 
+on:
   push:
     branches:
       - main
-
+    
+  
 jobs:
 
   deploy:
-    name: Deploy code
+
     runs-on: ubuntu-latest
 
     steps:
-
-    - name: Checkout code
-      uses: actions/checkout@v2
     
-    - name: Deploy to server 
-      uses: easingthemes/ssh-deploy@main
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-        REMOTE_HOST: ${{ secrets.SERVER_IP }}
-        REMOTE_USER: ubuntu
-        TARGET: /var/www/html
+      - name: Checkout code 
+        uses: actions/checkout@v2
+
+      - name: Deploy to instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.BASTION_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            ssh -i ~/private_key.pem ${{ secrets.SSH_USER }}@${{ secrets.WORDPRESS_HOST }} "
+              #rm -rf /var/www/html/* 
+              scp -r ./* ${{ secrets.SSH_USER }}@${{ secrets.WORDPRESS_HOST }}:/var/www/html/
+            "
