@@ -1,6 +1,6 @@
 name: Deploy website
 
-on: 
+on:
   push:
     branches:
       - main
@@ -16,17 +16,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     
-    - name: Deploy to bastion host 
+    - name: Deploy to server
       uses: easingthemes/ssh-deploy@main
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
         REMOTE_HOST: ${{ secrets.BASTION_HOST }}
         REMOTE_USER: ubuntu
-        TARGET: /tmp/github-repo
-    
+        TARGET: /var/www/html
+
     - name: SSH into WordPress server and copy files
       run: |
-        ssh -o StrictHostKeyChecking=no -i ${{ secrets.SERVER_SSH_KEY }} ubuntu@${{ secrets.BASTION_HOST }} \
-          "scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa -r /tmp/github-repo/* ubuntu@${{ secrets.WORDPRESS_HOST }}:/var/www/html"
-
-
+        ssh -o StrictHostKeyChecking=no -i ~/private_key.pem ubuntu@${{ secrets.WORDPRESS_HOST }} 'scp -o StrictHostKeyChecking=no -i ~/private_key.pem -r /home/ubuntu/private_key.pem /var/www/html'
