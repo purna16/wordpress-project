@@ -1,10 +1,10 @@
-Here is a detailed documentation covering the entire process of setting up automated WordPress deployment on AWS using GitHub Actions per the assignment requirements:
+Here is a detailed documentation covering the entire process of setting up automated WordPress deployment on AWS using GitHub Actions as per the assignment requirements:
 
 # Automated WordPress Deployment on AWS
 
 ## Introduction
 
-The goal is to install WordPress on an EC2 instance in AWS and automate deployments using GitHub Actions per the technical assignment requirements.
+The goal is to install WordPress on an EC2 instance in AWS and automate deployments using GitHub Actions as per the technical assignment requirements.
 
 ## Server Setup
 
@@ -15,8 +15,8 @@ The goal is to install WordPress on an EC2 instance in AWS and automate deployme
 - Updated packages:
 
 ---
-sudo apt update
-sudo apt upgrade
+- sudo apt update
+- sudo apt upgrade
 ---
 
 - Installed Nginx and optimized configuration:
