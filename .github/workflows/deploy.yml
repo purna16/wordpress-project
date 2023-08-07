@@ -24,7 +24,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
-            ssh -i ~/private_key.pem ${{ secrets.SSH_USER }}@${{ secrets.WORDPRESS_HOST }} "
+            ssh -o StrictHostKeyChecking=no -i ~/private_key.pem ${{ secrets.SSH_USER }}@${{ secrets.WORDPRESS_HOST }} "
               #rm -rf /var/www/html/* 
               scp -r ./* ${{ secrets.SSH_USER }}@${{ secrets.WORDPRESS_HOST }}:/var/www/html/
             "
