@@ -17,12 +17,12 @@ jobs:
       - name: Checkout code 
         uses: actions/checkout@v2
 
-      - name: Create .ssh dir
-        run: mkdir -p ~/.ssh
+      # - name: Create .ssh dir
+      #   run: mkdir -p ~/.ssh
 
       - name: Add known hosts
         run: |
-          echo "${{ secrets.KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+          echo "${{ secrets.KNOWN_HOSTS }}" >> /home/runner/.ssh/known_hosts
 
       - name: Deploy to instance
         uses: appleboy/ssh-action@master
