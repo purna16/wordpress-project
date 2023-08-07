@@ -1,37 +1,25 @@
-name: Deploy to WordPress Server
+name: Deploy websit
 
 on: 
   push:
     branches:
       - main
 
-env:
-  SSH_USER: ubuntu
-  BASTION_HOST: ${{ secrets.BASTION_HOST }}
-  WORDPRESS_HOST: ${{ secrets.WORDPRESS_HOST }}
-
 jobs:
 
   deploy:
-
+    name: Deploy code
     runs-on: ubuntu-latest
 
     steps:
-    
+
     - name: Checkout code
       uses: actions/checkout@v2
-
-    - name: Setup SSH 
-      uses: webfactory/ssh-agent@v0.5.0
-      with: 
-        ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
-
-    - name: SSH into Bastion and deploy  
+    
+    - name: Deploy to server 
+      uses: easingthemes/ssh-deploy@main
       env:
-        KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }} 
-      run: |
-        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=$KNOWN_HOSTS $SSH_USER@$BASTION_HOST "
-          ssh $SSH_USER@$WORDPRESS_HOST \"
-            #sudo rm -rf /var/www/html/*
-            sudo scp -r ./* $SSH_USER@$WORDPRESS_HOST:/var/www/html/\"
-        "
+        SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+        REMOTE_HOST: ${{ secrets.BASTION_HOST }}
+        REMOTE_USER: ubuntu
+        TARGET: /var/www/html
