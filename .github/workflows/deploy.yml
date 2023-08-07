@@ -26,4 +26,4 @@ jobs:
 
     - name: SSH into WordPress server and copy files
       run: |
-        ssh -o StrictHostKeyChecking=no -i /home/ubuntu/private_key.pem ubuntu@${{ secrets.BASTION_HOST }} 
+        ssh -o StrictHostKeyChecking=no -i ${{ secrets.SERVER_SSH_KEY }}  ubuntu@${{ secrets.BASTION_HOST }} 
