@@ -37,8 +37,8 @@ The goal is to install WordPress on an EC2 instance in AWS and automate deployme
 ---
 - sudo mysql_secure_installation
   
-# We need to set strong password, remove anonymous users, disallow root login, and delete the test database
-# We configured database server
+## We need to set strong password, remove anonymous users, disallow root login, and delete the test database
+## We configured database server
 ---
 ---
 - mysql -u root -p 
@@ -51,7 +51,7 @@ The goal is to install WordPress on an EC2 instance in AWS and automate deployme
 
 ## Installed PHP modules and configured php-fpm pool for Nginx.
 ---
-- sudo add-apt-repository ppa:ondrej/php             # adding php packages to ubutu repository
+- sudo add-apt-repository ppa:ondrej/php             # adding php packages to ubuntu repository
 - sudo apt update 
 - sudo apt install php7.4 php7.4-fpm php7.4-mysql php7.4-curl php7.4-gd php7.4-zip
 
@@ -67,9 +67,9 @@ The goal is to install WordPress on an EC2 instance in AWS and automate deployme
  ---
  - cd /etc/nginx/sites-enabled/
  - server_name mydomain.com # under server block if we have domain we need to configure here
- #we need to add index.php to list as server to know which file to open as wordpress written in php 
- #In location block we need to set /index.php?$args; this is basically configuration required to run wordpress site
- #Uncomment lines 'location' block as we installed php-fpm
+ ## we need to add index.php to list as server to know which file to open as wordpress written in php 
+ ## In location block we need to set /index.php?$args; this is basically configuration required to run wordpress site
+ ## Uncomment lines 'location' block as we installed php-fpm
  ---
  ## NOW WE CAN ACCESS WORDPRESS SITE FROM SERVER IP
  ## Configure database name, username, password, database host, table prefix
@@ -116,7 +116,7 @@ The goal is to install WordPress on an EC2 instance in AWS and automate deployme
 
 - In addition to this i created VPC, in that i created two public subnets and two private subnets in different availability zones
   
-- In public subnet i launched bastion hosts and in private subnets without public ip created two EC2 instances
+- In public subnet i launched bastion host and in private subnets without public ip created two EC2 instances
 
 - Created NAT gateway to allow private instance to download packages from internet
 
@@ -131,4 +131,4 @@ The goal is to install WordPress on an EC2 instance in AWS and automate deployme
 
 - Checked Nginx logs for errors. 
 
-- Performed security audits and configured monitoring.
+- Performed security audits.
