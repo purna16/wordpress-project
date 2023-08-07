@@ -17,6 +17,9 @@ jobs:
       - name: Checkout code 
         uses: actions/checkout@v2
 
+      - name: Create .ssh dir
+        run: mkdir -p ~/.ssh
+
       - name: Add known hosts
         run: |
           echo "${{ secrets.KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
