@@ -1,11 +1,15 @@
-name: Deploy to AWS
+name: Deploy to WordPress Server
 
-on:
+on: 
   push:
     branches:
       - main
-    
-  
+
+env:
+  SSH_USER: ubuntu
+  BASTION_HOST: ${{ secrets.BASTION_HOST }}
+  WORDPRESS_HOST: ${{ secrets.WORDPRESS_HOST }}
+
 jobs:
 
   deploy:
@@ -14,24 +18,20 @@ jobs:
 
     steps:
     
-      - name: Checkout code 
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      # - name: Create .ssh dir
-      #   run: mkdir -p ~/.ssh
+    - name: Setup SSH 
+      uses: webfactory/ssh-agent@v0.5.0
+      with: 
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Add known hosts
-        run: |
-          echo "${{ secrets.KNOWN_HOSTS }}" >> /home/runner/.ssh/known_hosts
-
-      - name: Deploy to instance
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.BASTION_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            ssh -o StrictHostKeyChecking=no -i ~/private_key.pem ${{ secrets.SSH_USER }}@${{ secrets.WORDPRESS_HOST }} "
-              #rm -rf /var/www/html/* 
-              scp -r ./* ${{ secrets.SSH_USER }}@${{ secrets.WORDPRESS_HOST }}:/var/www/html/
-            "
+    - name: SSH into Bastion and deploy  
+      env:
+        KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }} 
+      run: |
+        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=$KNOWN_HOSTS $SSH_USER@$BASTION_HOST "
+          ssh $SSH_USER@$WORDPRESS_HOST \"
+            #sudo rm -rf /var/www/html/*
+            sudo scp -r ./* $SSH_USER@$WORDPRESS_HOST:/var/www/html/\"
+        "
